@@ -367,19 +367,12 @@ class DataParser
      */
     protected function linkCategories()
     {
-        for (; ;) {
-            $wasChanged = false;
-            foreach ($this->categoriesList as $category) {
-                $parentId = $category->getParentId() ?? 0;
-                $parent   = $category->getParent();
-                if (!isset($parent) && $parentId && isset($this->categoriesList[$parentId])) {
-                    $this->categoriesList[$parentId]->addChild($category);
-                    $category->setParent($this->categoriesList[$parentId]);
-                    $wasChanged = true;
-                }
-            }
-            if (!$wasChanged) {
-                break;
+        foreach ($this->categoriesList as $category) {
+            $parentId = $category->getParentId() ?? 0;
+            $parent   = $category->getParent();
+            if (!isset($parent) && $parentId && isset($this->categoriesList[$parentId])) {
+                $this->categoriesList[$parentId]->addChild($category);
+                $category->setParent($this->categoriesList[$parentId]);
             }
         }
 
